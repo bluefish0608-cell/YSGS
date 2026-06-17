@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="연세대학교 지구시스템과학과 학술동아리 YSGS 공식 소개 홈페이지" />
+  <title>YSGS | Yonsei Society of Geoscientific Scrutiny</title>
+  <link rel="icon" type="image/png" href="assets/images/ico.png" />
+  <link rel="apple-touch-icon" href="assets/images/ico.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20260617-activity-carousel" />
+</head>
+<body data-page="home">
+  <header class="site-header" id="siteHeader"></header>
+
+  <main>
+    <section class="home-hero" id="top">
+      <div class="hero-media" id="homeHeroMedia" aria-hidden="true"></div>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow" id="homeHeroEyebrow"></p>
+          <h1 id="homeHeroTitle"></h1>
+          <p class="hero-description" id="homeHeroDescription"></p>
+          <div class="hero-actions" id="homeHeroActions"></div>
+        </div>
+        <aside class="hero-brief" id="homeHeroBrief" aria-label="YSGS overview"></aside>
+      </div>
+    </section>
+
+    <section class="section section-tight">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-kicker">What We Do</p>
+          <h2>지질과학을 직접 읽고, 말하고, 걸어보는 학술 공동체</h2>
+        </div>
+        <div class="activity-carousel" id="homeActivityCarousel">
+          <button class="activity-carousel-button activity-carousel-button-prev" id="homeActivityPrev" type="button" aria-label="이전 활동 보기">‹</button>
+          <div class="activity-carousel-viewport">
+            <div class="activity-feature-grid" id="homeActivityHighlights" tabindex="0" aria-label="YSGS 주요 활동"></div>
+          </div>
+          <button class="activity-carousel-button activity-carousel-button-next" id="homeActivityNext" type="button" aria-label="다음 활동 보기">›</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section featured-news-section" id="homeFeaturedNewsSection">
+      <div class="featured-news-backdrop" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-heading featured-news-heading">
+          <p class="section-kicker">Featured News</p>
+          <h2 id="homeFeaturedNewsTitle">주요 소식</h2>
+          <p id="homeFeaturedNewsLead"></p>
+        </div>
+        <div class="featured-news-grid" id="homeFeaturedNews"></div>
+      </div>
+    </section>
+
+    <section class="section section-muted">
+      <div class="container split-section">
+        <div class="section-heading align-left">
+          <p class="section-kicker">YSGS News</p>
+          <h2>최근 공지와 소식</h2>
+        </div>
+        <div class="news-list" id="homeNewsList"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container join-band" id="homeJoinBand"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="siteFooter"></footer>
+
+  <script src="data/navigation-data.js"></script>
+  <script src="data/site-data.js?v=20260616-site-split"></script>
+  <script src="data/index-data.js?v=20260616-site-split"></script>
+  <script src="data/join-data.js?v=20260616-join-data"></script>
+  <script src="data/activities-data.js"></script>
+  <script src="data/home-data.js?v=20260617-home-activities"></script>
+  <script src="data/news-data.js?v=20260615-home-news"></script>
+  <script src="data/home-news-data.js?v=20260616-featured-config"></script>
+  <script src="data/contact-data.js"></script>
+  <script src="js/layout.js?v=20260615-footer"></script>
+  <script src="js/home.js?v=20260617-activity-carousel"></script>
+  <script src="js/interactions.js"></script>
+  <script src="js/home-animations.js?v=20260615-home-news"></script>
+  <script src="script.js"></script>
+</body>
+</html>

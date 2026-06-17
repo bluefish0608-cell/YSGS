@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="YSGS 소식과 공지 게시판" />
+  <title>소식 | YSGS</title>
+  <link rel="icon" type="image/png" href="../assets/images/ico.png" />
+  <link rel="apple-touch-icon" href="../assets/images/ico.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css?v=20260616-featured-config" />
+</head>
+<body data-page="news">
+  <header class="site-header" id="siteHeader"></header>
+  <main class="page-main">
+    <section class="container page-root" id="newsPageRoot"></section>
+  </main>
+  <footer class="site-footer" id="siteFooter"></footer>
+
+  <div class="news-modal-detail" id="newsDetailModal" aria-hidden="true">
+    <div class="news-modal-backdrop" data-news-modal-close></div>
+    <article class="news-modal-card" role="dialog" aria-modal="true" aria-labelledby="newsModalTitle">
+      <button class="modal-close" type="button" data-news-modal-close aria-label="게시글 닫기">×</button>
+      <div class="news-modal-content" id="newsModalContent"></div>
+    </article>
+  </div>
+
+  <script src="../data/navigation-data.js"></script>
+  <script src="../data/site-data.js?v=20260616-site-split"></script>
+  <script src="../data/join-data.js?v=20260616-join-data"></script>
+  <script src="../data/activities-data.js"></script>
+  <script src="../data/officers-data.js"></script>
+  <script src="../data/news-data.js?v=20260615-home-news"></script>
+  <script src="../data/contact-data.js"></script>
+  <script src="../js/layout.js?v=20260615-footer"></script>
+  <script src="../js/pages.js?v=20260616-site-split"></script>
+  <script src="../js/news.js?v=20260615-home-news"></script>
+  <script src="../js/interactions.js"></script>
+  <script src="../script.js"></script>
+</body>
+</html>
