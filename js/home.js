@@ -191,6 +191,7 @@ function renderFeaturedNews() {
 
   if (!featuredItems.length) {
     section.hidden = true;
+    setupFeaturedNewsCollapse();
     return;
   }
 
@@ -206,6 +207,121 @@ function renderFeaturedNews() {
       </span>
     </a>`;
   }).join("");
+  setupFeaturedNewsCollapse();
+}
+
+function getFeaturedNewsColumnCount(grid) {
+  const template = getComputedStyle(grid).gridTemplateColumns;
+  if (!template || template === "none") return 1;
+  return Math.max(1, template.split(" ").filter(Boolean).length);
+}
+
+function getFeaturedNewsCollapseLimit(columnCount) {
+  if (columnCount === 1) return 2;
+  if (columnCount === 2) return 4;
+  return Infinity;
+}
+
+function getFeaturedNewsCollapsedHeight(grid, cards, collapseLimit) {
+  const lastVisibleCard = cards[Math.max(0, collapseLimit - 1)];
+  if (!lastVisibleCard) return grid.scrollHeight;
+
+  const gridTop = grid.getBoundingClientRect().top;
+  const cardBottom = lastVisibleCard.getBoundingClientRect().bottom;
+  return Math.ceil(cardBottom - gridTop);
+}
+
+function setFeaturedNewsCardState(cards, collapseLimit, expanded, shouldCollapse) {
+  cards.forEach((card, index) => {
+    const hidden = shouldCollapse && !expanded && index >= collapseLimit;
+    card.classList.toggle("is-hidden-by-collapse", hidden);
+    if (hidden) {
+      card.setAttribute("aria-hidden", "true");
+      card.setAttribute("tabindex", "-1");
+    } else {
+      card.removeAttribute("aria-hidden");
+      card.removeAttribute("tabindex");
+    }
+  });
+}
+
+function renderFeaturedNewsToggle(toggleRoot, expanded) {
+  let button = toggleRoot.querySelector(".featured-news-toggle");
+  if (!button) {
+    toggleRoot.innerHTML = `<button class="featured-news-toggle" type="button"></button>`;
+    button = toggleRoot.querySelector(".featured-news-toggle");
+  }
+
+  button.textContent = expanded ? "접기" : "펼치기";
+  button.setAttribute("aria-expanded", expanded ? "true" : "false");
+}
+
+function applyFeaturedNewsCollapse(options = {}) {
+  const grid = document.getElementById("homeFeaturedNews");
+  const toggleRoot = document.getElementById("homeFeaturedNewsToggle");
+  if (!grid || !toggleRoot) return;
+
+  const cards = Array.from(grid.querySelectorAll(".featured-news-card"));
+  const columnCount = getFeaturedNewsColumnCount(grid);
+  const collapseLimit = getFeaturedNewsCollapseLimit(columnCount);
+  const shouldCollapse = Number.isFinite(collapseLimit) && cards.length > collapseLimit;
+  const expanded = toggleRoot.dataset.featuredNewsExpanded === "true";
+  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  const animate = options.animate === true && !reduceMotion;
+
+  if (!shouldCollapse) {
+    grid.classList.remove("is-collapse-managed");
+    grid.style.maxHeight = "";
+    setFeaturedNewsCardState(cards, collapseLimit, true, false);
+    toggleRoot.hidden = true;
+    toggleRoot.innerHTML = "";
+    toggleRoot.dataset.featuredNewsExpanded = "false";
+    return;
+  }
+
+  grid.classList.add("is-collapse-managed");
+  const collapsedHeight = getFeaturedNewsCollapsedHeight(grid, cards, collapseLimit);
+  const expandedHeight = Math.ceil(grid.scrollHeight);
+  const targetHeight = expanded ? expandedHeight : collapsedHeight;
+
+  if (animate) {
+    grid.style.maxHeight = `${Math.ceil(grid.getBoundingClientRect().height)}px`;
+    grid.getBoundingClientRect();
+  }
+
+  setFeaturedNewsCardState(cards, collapseLimit, expanded, shouldCollapse);
+
+  if (animate) {
+    requestAnimationFrame(() => {
+      grid.style.maxHeight = `${targetHeight}px`;
+    });
+  } else {
+    grid.style.maxHeight = `${targetHeight}px`;
+  }
+
+  toggleRoot.hidden = false;
+  renderFeaturedNewsToggle(toggleRoot, expanded);
+}
+
+function setupFeaturedNewsCollapse() {
+  const toggleRoot = document.getElementById("homeFeaturedNewsToggle");
+  if (!toggleRoot) return;
+
+  if (toggleRoot.dataset.collapseReady === "true") {
+    requestAnimationFrame(applyFeaturedNewsCollapse);
+    return;
+  }
+
+  toggleRoot.addEventListener("click", event => {
+    const button = event.target.closest(".featured-news-toggle");
+    if (!button) return;
+    toggleRoot.dataset.featuredNewsExpanded = toggleRoot.dataset.featuredNewsExpanded === "true" ? "false" : "true";
+    applyFeaturedNewsCollapse({ animate: true });
+  });
+  window.addEventListener("resize", () => requestAnimationFrame(() => applyFeaturedNewsCollapse({ animate: false })));
+  toggleRoot.dataset.collapseReady = "true";
+  toggleRoot.dataset.featuredNewsExpanded = "false";
+  applyFeaturedNewsCollapse({ animate: false });
 }
 
 function renderHomeNews() {
